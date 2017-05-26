@@ -1,0 +1,15 @@
+setwd("~/Documents/Studying/Rcourse/ExData_Plotting1-master")
+url <- "https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2Fhousehold_power_consumption.zip"
+download.file(url,destfile = "household_power_consumption.zip",method = "curl")
+unzip("household_power_consumption.zip")
+data <- read.table("household_power_consumption.txt",sep = ";",header = T,na.strings = "?")
+dates <- c("1/2/2007","2/2/2007")
+dates <- as.Date(dates,"%d/%m/%Y")
+data$Date <- as.Date(data$Date,"%d/%m/%Y")
+subdata <- subset(data,data$Date %in% dates)
+gap <- as.numeric(subdata$Global_active_power)
+library(grDevices)
+png("plot1.png",height=480,width = 480,units = "px")
+hist(gap,col = "red",ylab = "Frequency",xlab = "Global Active Power(kilowatts)",main = "Global Active Power")
+dev.off()
+
